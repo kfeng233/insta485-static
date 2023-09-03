@@ -17,7 +17,37 @@
     height:100%;
 }
 .post1{
-    text-align: center;
-    border: 1px solid rgb(100, 100, 100);
-    position: absolute;
+    background: #ffffff;
+	margin: 0 auto;
+	width: 500px;
+	height: auto;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+    margin-bottom: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.post2{
+    background: #ffffff;
+	margin: auto;
+	width: 500px;
+	height: auto;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+    margin-bottom: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.post3{
+    background: #ffffff;
+	margin: auto;
+	width: 500px;
+	height: auto;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+    margin-bottom: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
