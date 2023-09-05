@@ -4,9 +4,12 @@ import click
 import pathlib
 import json
 import jinja2
+import shutil
 
 @click.command()
 @click.argument("input_dir", nargs=1, type=click.Path(exists=True))
+#@click.option("-o", "--output", type=click.Path(exists=True), help="Output directory.")
+#@click.argument("input_dir" "output_dir", nargs=2, type=click.Path(exists=True))
 
 def main(input_dir):
     # read the config file
@@ -38,5 +41,11 @@ def main(input_dir):
         f.write(output)
         f.close()
 
+    # copy directory
+    dst_dir = path
+    src_dir = os.path.join(input_dir, "static")
+    if os.path.exists(src_dir):
+        print(shutil.copytree(src_dir, dst_dir, dirs_exist_ok=True))
+    
 if __name__ == "__main__":
     main()
