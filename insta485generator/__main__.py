@@ -11,21 +11,32 @@ import jinja2
 def main(input_dir):
     # read the config file
     input_dir = pathlib.Path(input_dir)
-    abs_path = os.path.join(input_dir, "config.json")
-    config_filename = pathlib.Path(abs_path)
+    config_path = os.path.join(input_dir, "config.json")
+    config_filename = pathlib.Path(config_path)
     with config_filename.open() as config_file: 
         config_objects = json.load(config_file)
     # parse json objects
-    for obj in config_objects:
-        print(obj)
-    '''
+    json_objects = config_objects[0]
+    
     # read template file
+    template_dir = os.path.join(input_dir, "templates")
     template_env = jinja2.Environment(
-        template_dir = os.path.join(input_dir, "templates")
         loader=jinja2.FileSystemLoader(str(template_dir)),
-        autoescape=jinja2.select_autoescape(['html', 'xml']),
+        autoescape=jinja2.select_autoescape(['html', 'xml'])
     )
-    '''
+    
+    template = template_env.get_template("index.html")
+    output = template.render(words=json_objects['context']['words'])
+    
+    # write output
+    path = os.path.join(input_dir, "html")
+    filename = os.path.join(path, "index.html")
+    isExist = os.path.exists(path)
+    if not isExist:
+        os.makedirs(path)
+        f = open(filename, "w")
+        f.write(output)
+        f.close()
 
 if __name__ == "__main__":
     main()
