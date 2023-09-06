@@ -7,11 +7,10 @@ import jinja2
 import shutil
 
 @click.command()
-#@click.argument("input_dir", nargs=1, type=click.Path(exists=True))
-@click.option("input_dir", "output_dir", "-o", "--output", type=click.Path(exists=True), help="Output directory.")
-#@click.argument("input_dir" "output_dir", nargs=2, type=click.Path(exists=True))
+@click.argument("input_dir", nargs=1, type=click.Path(exists=True))
+@click.option('--output', '-o', type=click.Path(), help="Output directory.")
 
-def main(input_dir):
+def main(input_dir, output):
     # read the config file
     input_dir = pathlib.Path(input_dir)
     config_path = os.path.join(input_dir, "config.json")
@@ -29,25 +28,25 @@ def main(input_dir):
     )
     
     template = template_env.get_template("index.html")
-    output = template.render(words=json_objects['context']['words'])
+    output_file = template.render(words=json_objects['context']['words'])
     
     # update output option
-    url = json_objects['url'].lstrip("/")
-    output_dir = input_dir/"html" # default, can be changed with --output option
-    output_path = output_dir/url/"index.html"
+    url = pathlib.Path(json_objects['url'].lstrip("/"))
+    # not using '--output'
+    if not output:
+        output = pathlib.Path(input_dir/"html") # default, can be changed with --output option
+    output_path = pathlib.Path(output/url/"index.html")
 
     # write output
-    path = os.path.join(input_dir, "html")
-    filename = os.path.join(path, "index.html")
-    isExist = os.path.exists(path)
+    isExist = os.path.exists(output_path)
     if not isExist:
-        os.makedirs(path)
-        f = open(filename, "w")
-        f.write(output)
+        os.makedirs(output)
+        f = open(output_path, "w")
+        f.write(output_file)
         f.close()
 
     # copy directory
-    dst_dir = path
+    dst_dir = output_path
     src_dir = os.path.join(input_dir, "static")
     if os.path.exists(src_dir):
         print(shutil.copytree(src_dir, dst_dir, dirs_exist_ok=True))
