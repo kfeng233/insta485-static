@@ -9,8 +9,9 @@ import shutil
 @click.command()
 @click.argument("input_dir", nargs=1, type=click.Path(exists=True))
 @click.option('--output', '-o', type=click.Path(), help="Output directory.")
+@click.option('--verbose', '-v', is_flag=True, help="Print more output.")
 
-def main(input_dir, output):
+def main(input_dir, output, verbose):
     # read the config file
     input_dir = pathlib.Path(input_dir)
     config_path = os.path.join(input_dir, "config.json")
@@ -26,7 +27,6 @@ def main(input_dir, output):
         loader=jinja2.FileSystemLoader(str(template_dir)),
         autoescape=jinja2.select_autoescape(['html', 'xml'])
     )
-    
     template = template_env.get_template("index.html")
     output_file = template.render(words=json_objects['context']['words'])
     
@@ -46,10 +46,16 @@ def main(input_dir, output):
         f.close()
 
     # copy directory
-    dst_dir = output_path
+    dst_dir = output
     src_dir = os.path.join(input_dir, "static")
-    if os.path.exists(src_dir):
-        print(shutil.copytree(src_dir, dst_dir, dirs_exist_ok=True))
-    
+    isExist = os.path.exists(src_dir)
+    if isExist:
+        shutil.copytree(src_dir, dst_dir, dirs_exist_ok=True)
+
+    if verbose:
+        if isExist:
+            print(f"Copied {src_dir} -> {output}")
+        print(f"Rendered index.html -> {output_path}")
+
 if __name__ == "__main__":
     main()
