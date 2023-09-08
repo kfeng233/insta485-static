@@ -36,14 +36,14 @@ def fill_template(input_dir, config_object, template):
     )
     try:
         template = template_env.get_template(template)
-        for obj in config_object['context']:
-            output_file = template.render(**{obj:config_object['context'][obj]})
-        return output_file
+        rendered_template = template.render(context=config_object['context'])
+        return rendered_template
     except TemplateSyntaxError as err:
         click.echo(f"Error: {err} ")
         click.echo(f"Unexpected end of template. Jinja was looking \
-                   for the following tags: {'endfor'} or {'else'}. The \
-                   innermost block that needs to be closed is {'for'}.")
+        for the following tags: {'endfor'} or {'else'}. The \
+        innermost block that needs to be closed is {'for'}.")
+        click.echo(f"line: {err.filename}")
         return None
 
 

@@ -1,47 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link rel="stylesheet" href="../css/style.css">
+		<link rel="stylesheet" href="/css/style.css/">
 		<title>insts485</title>
 	</head>
 	<body>
 		<nav class="navigation">
 			<div class="container">
 				<div class="logo">
-					<a href="/">
-						<img src="../images/insta_logo.png" alt="insta logo" style="height: 50px; width: 50px;"/>
+					<a href="/index.html/">
+						<img src="/images/insta_logo.png/" alt="insta logo" style="height: 50px; width: 50px;"/>
 					</a>
 				</div>
 				<header style="font-family: fantasy; font-size: large;">INSTA485</header>
 				<ul class="nav">
 					<li><a href="/explore/">explore</a></li>
-					<li><a href="/users/awdeorio/">awdeorio</a></li>
+					<li><a href="/users/{{ context.logname }}/">{{ context.logname }}</a></li>
 				</ul>
 			</div>
 		</nav>
 		<hr style="width:100%; text-align:left; margin-left:0">
 		<div class="userpage">
+			<p>
+				{% if context.logname != context.username %}
+				{% if context.logname_follows_username == false %}
+				not following
+				{% else %}
+				following
+				{% endif %}
+				{% endif %}
+			</p>
 			<div class="username" style="font-size: larger; font-weight: bold;">
-				awdeorio
+				{{ context.username }} 
 			</div>
 			<div class="userdata">
-				2 posts 
+				{{ context.total_posts }} {% if context.total_posts > 1 %}posts{% else %}post{% endif %}
 				<span style="font-weight: bold;">
-					<a href="/users/awdeorio/followers/" style="text-decoration: none;">2 followers</a>
-					<a href="/users/awdeorio/following/" style="text-decoration: none;">2 following</a> 
+					<a href="/users/{{ context.username }}/followers/" style="text-decoration: none;">
+						{{ context.followers }} {% if context.followers > 1 %}follwers{% else %}follower{% endif %}
+					</a>
+					<a href="/users/{{ context.username }}/following/" style="text-decoration: none;">
+						{{ context.following }} {% if context.following > 1 %}followings{% else %}following{% endif %}
+					</a> 
 				</span>			
 			</div>
 			<div class="name">
-				Andrew DeOrio
+				{{ context.fullname }}
 			</div>
+			{% for post in context.posts %}
 			<div class="smallimgs">
-				<a href="/posts/1/">
-					<img src="../uploads/122a7d27ca1d7420a1072f695d9290fad4501a41.jpg" alt="chicken2" style="width: 40%; padding-top: 20px;">
-				</a>
-				<a href="/posts/3/">
-					<img src="../uploads/9887e06812ef434d291e4936417d125cd594b38a.jpg" alt="chicken1" style="width: 40%; padding-top: 20px;">
+				<a href="/posts/{{ post.postid }}/">
+					<img src="{{ post.img_url }}" alt="post of {{ context.username }}" style="width: 40%; padding-top: 20px;">
 				</a>
 			</div>
+			{% endfor %}
 		</div>
 	</body>
 </html>

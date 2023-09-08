@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="/css/style.css/">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Insta485</title>
 </head>
 <body>
     <nav class="navigation">
         <div class="container">
             <div class="logo">
-                <a href="/index.html/">
-                    <img src = "/images/insta_logo.png/" alt="insta logo" style="height: 50px; width: 50px;"/>
+                <a href="/index.html">
+                    <img src = "/images/insta_logo.png" alt="insta logo" style="height: 50px; width: 50px;"/>
                 </a>
             </div>
             <header style="font-family: fantasy; font-size: large;">INSTA485</header>
             <ul class="nav">
                 <li><a href="/explore/">explore</a></li>
-                <li><a href="/users/{{ context.logname }}/">{{ context.logname }}</a></li>
+                <li><a href="/users/awdeorio">awdeorio</a></li>
             </ul>
         </div>
     </nav>
@@ -23,12 +23,12 @@
     <main>
         <div class="explore">
             <h1>Explore</h1>
-            {% for user in context.not_following %}
+            
             <div class="userinfo">
-                <a href="/users/{{ user.username }}/">{{ user.username }}</a>
-                <img src="{{ user.user_img_url}}" alt="{{ user.username }}'s picture">
+                <a href="/users/jag">jag</a>
+                <img src="/uploads/73ab33bd357c3fd42292487b825880958c595655.jpg" alt="jag's picture">
             </div>
-            {% endfor %}
+            
         </div>
     </main>
 </body>
