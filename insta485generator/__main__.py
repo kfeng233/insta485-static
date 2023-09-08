@@ -16,7 +16,7 @@ def read_config(input_dir):
     try:
         with config_filename.open(encoding="utf-8") as config_file:
             config_objects = json.load(config_file)
-        return config_objects[0]
+        return config_objects
     except FileNotFoundError:
         click.echo(f"Error: {config_file} not found")
         return None
@@ -27,7 +27,7 @@ def read_config(input_dir):
         return None
 
 
-def fill_template(input_dir, config_objects):
+def fill_template(input_dir, config_object, template):
     """Fill template with JSON data and return a rendered template."""
     template_dir = os.path.join(input_dir, "templates")
     template_env = jinja2.Environment(
@@ -35,8 +35,9 @@ def fill_template(input_dir, config_objects):
         autoescape=jinja2.select_autoescape(['html', 'xml'])
     )
     try:
-        template = template_env.get_template("index.html")
-        output_file = template.render(words=config_objects['context']['words'])
+        template = template_env.get_template(template)
+        for obj in config_object['context']:
+            output_file = template.render(**{obj:config_object['context'][obj]})
         return output_file
     except TemplateSyntaxError as err:
         click.echo(f"Error: {err} ")
@@ -46,33 +47,36 @@ def fill_template(input_dir, config_objects):
         return None
 
 
-def write_output(input_dir, output_dir, config_objects,
+def write_output(input_dir, output_dir, config_object,
                  rendered_template, verbose):
     """Write a output HTML file and copy static directory."""
-    if os.path.exists(output_dir):
-        click.echo(f"Error: {output_dir} already exists")
+    url = pathlib.Path(config_object['url'].lstrip("/")) 
+    output_path = pathlib.Path(output_dir/url/"index.html")
+    print(output_dir)
+    if os.path.exists(output_path):
+        click.echo(f"Error: {output_path} already exists")
     else:
-        os.makedirs(output_dir)
-        url = pathlib.Path(config_objects['url'].lstrip("/"))
-        output_path = pathlib.Path(output_dir/url/"index.html")
+        os.makedirs(pathlib.Path(output_dir/url), exist_ok=True)
+        #url = pathlib.Path(config_objects['url'].lstrip("/"))
+        #output_path = pathlib.Path(output_dir/url/"index.html")
         with open(output_path, 'w', encoding="utf-8") as file:
             file.write(rendered_template)
         # if static exists, copy its directory
-        copy_dir(input_dir, output_dir, verbose)
+        if not os.path.exists(os.path.join(output_dir, "static")):
+            copy_dir(input_dir, output_dir, verbose)
         # verbose option
         if verbose:
-            click.echo(f"Rendered index.html -> {output_path}")
+            click.echo(f"Rendered {config_object['template']} -> {output_path}")
 
 
 def copy_dir(input_dir, output, verbose):
     """Copy static directory to the input directory."""
-    dst_dir = output
     src_dir = os.path.join(input_dir, "static")
     if os.path.exists(src_dir):
-        shutil.copytree(src_dir, dst_dir, dirs_exist_ok=True)
+        shutil.copytree(src_dir, output, dirs_exist_ok=True)
         # verbose option
         if verbose:
-            click.echo(f"Copied {src_dir} -> {dst_dir}")
+            click.echo(f"Copied {src_dir} -> {output}")   
 
 
 @click.command()
@@ -85,13 +89,14 @@ def main(input_dir, output, verbose):
     config_objects = read_config(input_dir)
     if config_objects is None:
         return
-    rendered_template = fill_template(input_dir, config_objects)
-    if rendered_template is None:
-        return
-    # non --output option -> use default
-    if output is None:
-        output = pathlib.Path(input_dir/"html")
-    write_output(input_dir, output, config_objects, rendered_template, verbose)
+    for obj in config_objects:
+        rendered_template = fill_template(input_dir, obj, obj['template'])
+        if rendered_template is None:
+            return
+        # non --output option -> use default
+        if output is None:
+            output = pathlib.Path(input_dir/"html")
+        write_output(input_dir, output, obj, rendered_template, verbose)
 
 
 if __name__ == "__main__":
