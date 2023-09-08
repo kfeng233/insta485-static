@@ -6,7 +6,7 @@ import shutil
 import click
 import jinja2
 from jinja2 import TemplateSyntaxError
-
+static_copied = False
 
 def read_config(input_dir):
     """Read and load config file, return JSON data."""
@@ -50,20 +50,19 @@ def fill_template(input_dir, config_object, template):
 def write_output(input_dir, output_dir, config_object,
                  rendered_template, verbose):
     """Write a output HTML file and copy static directory."""
+    global static_copied
     url = pathlib.Path(config_object['url'].lstrip("/")) 
     output_path = pathlib.Path(output_dir/url/"index.html")
-    print(output_dir)
     if os.path.exists(output_path):
         click.echo(f"Error: {output_path} already exists")
     else:
         os.makedirs(pathlib.Path(output_dir/url), exist_ok=True)
-        #url = pathlib.Path(config_objects['url'].lstrip("/"))
-        #output_path = pathlib.Path(output_dir/url/"index.html")
         with open(output_path, 'w', encoding="utf-8") as file:
             file.write(rendered_template)
         # if static exists, copy its directory
-        if not os.path.exists(os.path.join(output_dir, "static")):
+        if not static_copied:
             copy_dir(input_dir, output_dir, verbose)
+            static_copied = True
         # verbose option
         if verbose:
             click.echo(f"Rendered {config_object['template']} -> {output_path}")
@@ -76,7 +75,7 @@ def copy_dir(input_dir, output, verbose):
         shutil.copytree(src_dir, output, dirs_exist_ok=True)
         # verbose option
         if verbose:
-            click.echo(f"Copied {src_dir} -> {output}")   
+            click.echo(f"Copied {src_dir} -> {output}")  
 
 
 @click.command()
