@@ -9,7 +9,7 @@
 			<div class="container">
 				<div class="logo">
 					<a href="/">
-						<img src = "/images/insta_logo.png/" alt="insta logo" style="height: 50px; width: 50px;"/>
+						<img src = "/images/insta_logo.png" alt="insta logo" style="height: 50px; width: 50px;"/>
 					</a>
 				</div>
 				<header style="font-family: fantasy; font-size: large;">INSTA485</header>
@@ -39,7 +39,7 @@
 			{% for comment in comments %}
 			<div class="comment" style="text-align: left;">	
 				<div>
-					<a href="/users/{{ comment.owner }}/" style="color: black; text-decoration: none; font-weight: bold;">{{ comments.owner }}</a>
+					<a href="/users/{{ comment.owner }}/" style="color: black; text-decoration: none; font-weight: bold;">{{ comment.owner }}</a>
 					{{ comment.text }}
 				</div>	
 			</div>	

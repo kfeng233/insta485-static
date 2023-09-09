@@ -15,26 +15,24 @@
 				<header style="font-family: fantasy; font-size: large;">INSTA485</header>
 				<ul class="nav">
 					<li><a href="/explore/">explore</a></li>
-					<li><a href="/users/{{ logname }}/">{{ logname }}</a></li>
+					<li><a href="/users/awdeorio/">awdeorio</a></li>
 				</ul>
 			</div>
 		</nav>
 		<hr style="width:100%; text-align:left; margin-left:0">
         <div class="following">
-            {% for user in following %}
-            <a href="/users/{{ user.username }}/">{{ user.username }}</a> 
-            <img src="{{ user.user_img_url }}" alt="profile of {{ user.username }}" style="width: 100px; height: 100px;">
+            
+            <a href="/users/michjc/">michjc</a> 
+            <img src="/uploads/5ecde7677b83304132cb2871516ea50032ff7a4f.jpg" alt="profile of michjc" style="width: 100px; height: 100px;">
             <p>
-				{% if logname != user.username %}
-				{% if user.logname_follows_username == false %}
-				not following
-				{% else %}
+				
+				
 				following
-				{% endif %}
-				{% endif %}
+				
+				
 			</p>
             <hr style="width:100%; text-align:left; margin-left:0">
-            {% endfor %}
+            
         </div>
 	</body>
 </html>

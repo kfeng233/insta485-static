@@ -15,45 +15,45 @@
 				<header style="font-family: fantasy; font-size: large;">INSTA485</header>
 				<ul class="nav">
 					<li><a href="/explore/">explore</a></li>
-					<li><a href="/users/{{ logname }}/">{{ logname }}</a></li>
+					<li><a href="/users/awdeorio/">awdeorio</a></li>
 				</ul>
 			</div>
 		</nav>
 		<hr style="width:100%; text-align:left; margin-left:0">
 		<div class="userpage">
 			<p>
-				{% if logname != username %}
-				{% if logname_follows_username == false %}
-				not following
-				{% else %}
-				following
-				{% endif %}
-				{% endif %}
+				
 			</p>
 			<div class="username" style="font-size: larger; font-weight: bold;">
-				{{ username }} 
+				awdeorio 
 			</div>
 			<div class="userdata">
-				{{ total_posts }} {% if total_posts > 1 %}posts{% else %}post{% endif %}
+				2 posts
 				<span style="font-weight: bold;">
-					<a href="/users/{{ username }}/followers/" style="text-decoration: none;">
-						{{ followers }} {% if followers > 1 %}follwers{% else %}follower{% endif %}
+					<a href="/users/awdeorio/followers/" style="text-decoration: none;">
+						2 follwers
 					</a>
-					<a href="/users/{{ username }}/following/" style="text-decoration: none;">
-						{{ following }} {% if following > 1 %}followings{% else %}following{% endif %}
+					<a href="/users/awdeorio/following/" style="text-decoration: none;">
+						2 followings
 					</a> 
 				</span>			
 			</div>
 			<div class="name">
-				{{ fullname }}
+				Andrew DeOrio
 			</div>
-			{% for post in posts %}
+			
 			<div class="smallimgs">
-				<a href="/posts/{{ post.postid }}/">
-					<img src="{{ post.img_url }}" alt="post of {{ username }}" style="width: 40%; padding-top: 20px;">
+				<a href="/posts/1/">
+					<img src="/uploads/122a7d27ca1d7420a1072f695d9290fad4501a41.jpg" alt="post of awdeorio" style="width: 40%; padding-top: 20px;">
 				</a>
 			</div>
-			{% endfor %}
+			
+			<div class="smallimgs">
+				<a href="/posts/3/">
+					<img src="/uploads/9887e06812ef434d291e4936417d125cd594b38a.jpg" alt="post of awdeorio" style="width: 40%; padding-top: 20px;">
+				</a>
+			</div>
+			
 		</div>
 	</body>
 </html>
