@@ -37,6 +37,8 @@ def fill_template(input_dir, config_object, template):
     try:
         template = template_env.get_template(template)
         rendered_template = template.render(context=config_object['context'])
+        for elem in config_object['context']:
+            rendered_template = template.render(**{elem:config_object['context'][elem]})
         return rendered_template
     except TemplateSyntaxError as err:
         click.echo(f"Error: {err} ")

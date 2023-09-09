@@ -15,12 +15,12 @@
 				<header style="font-family: fantasy; font-size: large;">INSTA485</header>
 				<ul class="nav">
 					<li><a href="/explore/">explore</a></li>
-					<li><a href="/users/{{ context.logname }}/">{{ context.logname }}</a></li>
+					<li><a href="/users/{{ logname }}/">{{ logname }}</a></li>
 				</ul>
 			</div>
 		</nav>
 		<hr style="width:100%; text-align:left; margin-left:0">
-		{% for post in context.posts %}
+		{% for post in posts %}
 		<div class="post{{ post.postid }}">	
 			<div class="profile">
 				<a href="/users/{{ post.owner }}/">

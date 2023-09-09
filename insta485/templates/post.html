@@ -15,31 +15,31 @@
 				<header style="font-family: fantasy; font-size: large;">INSTA485</header>
 				<ul class="nav">
 					<li><a href="/explore/">explore</a></li>
-					<li><a href="/users/{{ context.logname }}/">{{ context.logname }}</a></li>
+					<li><a href="/users/{{ logname }}/">{{ logname }}</a></li>
 				</ul>
 			</div>
 		</nav>
 		<hr style="width:100%; text-align:left; margin-left:0">
-		<div class="post{{ context.postid }}">	
+		<div class="post{{ postid }}">	
 			<div class="profile">
-				<a href="/users/{{ context.owner }}/">
-					<img src="{{ context.owner_img_url }}" alt="photo of {{ context.owner }}" style="height: 40px; width: 40px; text-align: left;"/>
+				<a href="/users/{{ owner }}/">
+					<img src="{{ owner_img_url }}" alt="photo of {{ owner }}" style="height: 40px; width: 40px; text-align: left;"/>
 				</a>
-				<a href="/users/{{ context.owner }}/" style="color: black; text-decoration: none; text-align: left;">{{ context.owner }}</a>
-				<a href="/posts/{{ context.postid }}/" style="height: 40px; width: 40px; text-align:right; text-decoration: none; color: #686868; ">
-					{{ context.timestamp }}
+				<a href="/users/{{ owner }}/" style="color: black; text-decoration: none; text-align: left;">{{ owner }}</a>
+				<a href="/posts/{{ postid }}/" style="height: 40px; width: 40px; text-align:right; text-decoration: none; color: #686868; ">
+					{{ timestamp }}
 				</a>
 			</div>
 			<div class="content">
-				<img src="{{ context.img_url }}" alt="chicken1" style="width: 500px; height: 500px;"/>
+				<img src="{{ img_url }}" alt="chicken1" style="width: 500px; height: 500px;"/>
 			</div>
 			<div class="likes" style="text-align: left;">
-				{{ context.likes }} {% if context.likes > 1 %}likes{% else %}like{% endif %}
+				{{ likes }} {% if likes > 1 %}likes{% else %}like{% endif %}
 			</div>
-			{% for comment in context.comments %}
+			{% for comment in comments %}
 			<div class="comment" style="text-align: left;">	
 				<div>
-					<a href="/users/{{ comment.owner }}/" style="color: black; text-decoration: none; font-weight: bold;">{{ context.comments.owner }}</a>
+					<a href="/users/{{ comment.owner }}/" style="color: black; text-decoration: none; font-weight: bold;">{{ comments.owner }}</a>
 					{{ comment.text }}
 				</div>	
 			</div>	

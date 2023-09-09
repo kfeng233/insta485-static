@@ -15,15 +15,15 @@
 				<header style="font-family: fantasy; font-size: large;">INSTA485</header>
 				<ul class="nav">
 					<li><a href="/explore/">explore</a></li>
-					<li><a href="/users/{{ context.logname }}/">{{ context.logname }}</a></li>
+					<li><a href="/users/{{ logname }}/">{{ logname }}</a></li>
 				</ul>
 			</div>
 		</nav>
 		<hr style="width:100%; text-align:left; margin-left:0">
 		<div class="userpage">
 			<p>
-				{% if context.logname != context.username %}
-				{% if context.logname_follows_username == false %}
+				{% if logname != username %}
+				{% if logname_follows_username == false %}
 				not following
 				{% else %}
 				following
@@ -31,26 +31,26 @@
 				{% endif %}
 			</p>
 			<div class="username" style="font-size: larger; font-weight: bold;">
-				{{ context.username }} 
+				{{ username }} 
 			</div>
 			<div class="userdata">
-				{{ context.total_posts }} {% if context.total_posts > 1 %}posts{% else %}post{% endif %}
+				{{ total_posts }} {% if total_posts > 1 %}posts{% else %}post{% endif %}
 				<span style="font-weight: bold;">
-					<a href="/users/{{ context.username }}/followers/" style="text-decoration: none;">
+					<a href="/users/{{ username }}/followers/" style="text-decoration: none;">
 						{{ context.followers }} {% if context.followers > 1 %}follwers{% else %}follower{% endif %}
 					</a>
-					<a href="/users/{{ context.username }}/following/" style="text-decoration: none;">
+					<a href="/users/{{ username }}/following/" style="text-decoration: none;">
 						{{ context.following }} {% if context.following > 1 %}followings{% else %}following{% endif %}
 					</a> 
 				</span>			
 			</div>
 			<div class="name">
-				{{ context.fullname }}
+				{{ fullname }}
 			</div>
-			{% for post in context.posts %}
+			{% for post in posts %}
 			<div class="smallimgs">
 				<a href="/posts/{{ post.postid }}/">
-					<img src="/{{ post.img_url }}/" alt="post of {{ context.username }}" style="width: 40%; padding-top: 20px;">
+					<img src="/{{ post.img_url }}/" alt="post of {{ username }}" style="width: 40%; padding-top: 20px;">
 				</a>
 			</div>
 			{% endfor %}
