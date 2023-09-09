@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link rel="stylesheet" href="/css/style.css/">
+		<link rel="stylesheet" href="/css/style.css">
 		<title>insts485</title>
 	</head>
 	<body>
@@ -24,7 +24,7 @@
 		<div class="post{{ post.postid }}">	
 			<div class="profile">
 				<a href="/users/{{ post.owner }}/">
-					<img src="/{{ post.owner_img_url }}/" alt="photo of {{ post.owner }}" style="height: 40px; width: 40px; text-align: left;"/>
+					<img src="{{ post.owner_img_url }}" alt="photo of {{ post.owner }}" style="height: 40px; width: 40px; text-align: left;"/>
 				</a>
 				<a href="/users/{{ post.owner }}/" style="color: black; text-decoration: none; text-align: left;">{{ post.owner }}</a>
 				<a href="/posts/{{ post.postid }}/" style="height: 40px; width: 40px; text-align:right; text-decoration: none; color: #686868; ">
@@ -32,7 +32,7 @@
 				</a>
 			</div>
 			<div class="content">
-				<img src="/{{ post.img_url }}/" alt="chicken1" style="width: 500px; height: 500px;"/>
+				<img src="{{ post.img_url }}" alt="chicken1" style="width: 500px; height: 500px;"/>
 			</div>
 			<div class="likes" style="text-align: left;">
 				{{ post.likes }} {% if post.likes > 1 %}likes{% else %}like{% endif %}

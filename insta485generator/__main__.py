@@ -43,7 +43,6 @@ def fill_template(input_dir, config_object, template):
         click.echo(f"Unexpected end of template. Jinja was looking \
         for the following tags: {'endfor'} or {'else'}. The \
         innermost block that needs to be closed is {'for'}.")
-        click.echo(f"line: {err.filename}")
         return None
 
 
